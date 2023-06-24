@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 
 function Message({ msg, type, time }:any) {
+  console.log(msg);
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -11,10 +12,10 @@ function Message({ msg, type, time }:any) {
       }`}
     >
       <div
-        className={`flex flex-col items-start justify-center text-white rounded-xl p-4 ${
+        className={`flex flex-col items-start justify-center ${type === 'bot'? 'text-black':'text-white'}  rounded-xl p-4 ${
           type === 'bot'
-            ? 'bg-[#3A3F47] rounded-tl-none'
-            : 'bg-[#8AA1FF] rounded-br-none'
+            ? 'bg-[#f1e56c] rounded-tl-none'
+            : 'bg-[#FF6600] rounded-br-none'
         }`}
       >
         <p>{msg}</p>
@@ -26,7 +27,7 @@ function Message({ msg, type, time }:any) {
   );
 }
 
-export default function Messages({ messages }:any) {
+export default function Messages({ messages, prevMessage }:any) {
   const messagesEndRef = useRef<null|HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -37,14 +38,23 @@ export default function Messages({ messages }:any) {
 
   return (
     <div className="w-[600px] max-h-96 overflow-y-scroll scrollbar-hide space-y-4">
+
+      {
+        prevMessage.length?
+        prevMessage.map((message:any, index:number) => <Message key={index} {...message} />):
+
+      <>
       {messages.length ? (
         messages.map((message:any, index:number) => <Message key={index} {...message} />)
       ) : (
         <div className="flex items-center justify-center h-full">
-          <p className="text-white text-sm">Ask the bot anything...</p>
+          <p className="text-white text-sm">Ask the bot relavent to Category Topics...</p>
         </div>
       )}
       <div ref={messagesEndRef} />
+      </>
+}
+      
     </div>
   );
 }

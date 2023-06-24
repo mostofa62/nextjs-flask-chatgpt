@@ -1,20 +1,17 @@
 "use client"; // This is a client component 👈🏽
-
-
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 //import useAuthRoute from '@/app/hooks/useAuthRoute';
 import { useRouter, usePathname } from "next/navigation";
-import useAuth from '@/app/hooks/useAuth';
 import UseAuthRoute from '@/app/hooks/useAuthRoute';
-
 
 interface DefaultLayoutProps {
   children: ReactNode;
 }
 
-const DefaultLayout = ({ children }: DefaultLayoutProps) => {
+const FullPageLayout = ({ children }: DefaultLayoutProps) => {
+  
   const router = useRouter();
   const pathname = usePathname();
   //const redirect = useAuthRoute(pathname);
@@ -23,24 +20,23 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     if(typeof redirect !='undefined'){
       router.push(redirect);
     }
+    
   },[])
   */
-
-  //useProtection();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark">
       {/* <!-- ===== Page Wrapper Start ===== --> */}
-      <div className="flex h-screen overflow-hidden bg-slate-800">
+      <div className="flex h-screen overflow-hidden bg-black">
         {/* <!-- ===== Sidebar Start ===== --> */}
-        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        
         {/* <!-- ===== Sidebar End ===== --> */}
 
         {/* <!-- ===== Content Area Start ===== --> */}
         <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
           {/* <!-- ===== Header Start ===== --> */}
-          <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          
           {/* <!-- ===== Header End ===== --> */}
 
           {/* <!-- ===== Main Content Start ===== --> */}
@@ -60,4 +56,4 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   );
 };
 
-export default DefaultLayout;
+export default FullPageLayout;

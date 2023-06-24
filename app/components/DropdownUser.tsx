@@ -1,15 +1,54 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-
 import UserOne from '../images/user/user-01.png';
+const url = process.env.url;
+import axios from 'axios';
+
+import { useRouter } from "next/navigation";
+import useAuth from '@/app/hooks/useAuth';
 
 const DropdownUser = () => {
+
+  
+  //logout user
+  const authContext = useAuth();
+  const {isLoggedIn} = authContext;
+  const router = useRouter()
+
+  
+
+  const logoutHandler = async()=>{
+    
+    await axios.post(`${url}logout`, 
+    {token:authContext.token }, {
+    
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }
+) .then(function (response) {
+      authContext.logout();
+      router.push('/login');
+    
+})
+.catch(function (error) {
+  //console.log(error);
+});
+
+  };
+
+  
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
 
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
-
+  let Loguser = authContext.role;
+  //if (typeof window !== 'undefined') {
+  //Loguser = localStorage.getItem('Loguser');
+  //}
+  
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -40,19 +79,26 @@ const DropdownUser = () => {
     <div className="relative">
       <Link
         ref={trigger}
-        onClick={() => setDropdownOpen(!dropdownOpen)}
+        onClick={(e:any) =>{
+          e.preventDefault();
+          setDropdownOpen(!dropdownOpen)
+        }}
         className="flex items-center gap-4"
-        href="#"
+        href={(Loguser && Loguser == '1')?'/admin':'/user'}
       >
         <span className="hidden text-right lg:block">
-          <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+          <span className="block text-lg font-bold text-[#f1e56c] dark:text-white">
+            {authContext.displayName}
           </span>
+          {/*
           <span className="block text-xs">UX Designer</span>
+  */}
         </span>
 
         <span className="h-12 w-12 rounded-full">
+          {/*
           <Image src={UserOne} alt="User" />
+*/}
         </span>
 
         <svg
@@ -79,15 +125,17 @@ const DropdownUser = () => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark ${
+        className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-black shadow-default dark:border-strokedark dark:bg-boxdark ${
           dropdownOpen === true ? 'block' : 'hidden'
         }`}
       >
+        {
         <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
+          
           <li>
             <Link
-              href="/profile"
-              className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+              href={(Loguser && Loguser == '1')?'/admin/profile':'/user/profile'}
+              className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-[#f1e56c] lg:text-base"
             >
               <svg
                 className="fill-current"
@@ -109,6 +157,7 @@ const DropdownUser = () => {
               My Profile
             </Link>
           </li>
+          {/*
           <li>
             <Link
               href="#"
@@ -155,8 +204,11 @@ const DropdownUser = () => {
               Account Settings
             </Link>
           </li>
+        */}
+      
         </ul>
-        <button className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+      }
+        <button onClick={logoutHandler} className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-[#f1e56c] lg:text-base">
           <svg
             className="fill-current"
             width="22"
