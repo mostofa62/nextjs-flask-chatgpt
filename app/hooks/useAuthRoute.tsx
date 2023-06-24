@@ -18,7 +18,7 @@ const UseAuthRoute = ({ children }: DefaultLayoutProps) => {
 
         
     const authCtx = useAuth();
-    const router = useRouter();
+    //const router = useRouter();
     const path = usePathname();
     let redirect = '/login';
     let showChildren = true;
@@ -39,11 +39,12 @@ const UseAuthRoute = ({ children }: DefaultLayoutProps) => {
 
     //console.log(path);
     //const router = useRouter();
-    if(!authCtx.isLoggedIn){
+    
+    //if(!authCtx.isLoggedIn){
         //redirect= '/login';
         //showChildren=false;
-        router.push('/login');
-    }
+    //    router.push('/login');
+    //}
     if(authCtx.isLoggedIn){
         if(path == "/login"){
             redirect = authCtx.role == "1" ?"/admin":"/user";

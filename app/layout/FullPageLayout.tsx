@@ -5,6 +5,8 @@ import Sidebar from '../components/Sidebar';
 //import useAuthRoute from '@/app/hooks/useAuthRoute';
 import { useRouter, usePathname } from "next/navigation";
 import UseAuthRoute from '@/app/hooks/useAuthRoute';
+import useAuth from '@/app/hooks/useAuth';
+
 
 interface DefaultLayoutProps {
   children: ReactNode;
@@ -14,6 +16,8 @@ const FullPageLayout = ({ children }: DefaultLayoutProps) => {
   
   const router = useRouter();
   const pathname = usePathname();
+  const authCtx = useAuth();
+
   //const redirect = useAuthRoute(pathname);
   /*
   useEffect(()=>{
@@ -23,6 +27,15 @@ const FullPageLayout = ({ children }: DefaultLayoutProps) => {
     
   },[])
   */
+  useEffect(()=>{
+    /*
+    if(typeof redirect !='undefined'){
+      router.push(redirect);
+    }*/
+    if(!authCtx.isLoggedIn){
+      router.push('/login');
+    }
+  },[authCtx.isLoggedIn,router])
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (

@@ -17,14 +17,22 @@ interface DefaultLayoutProps {
 const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   const router = useRouter();
   const pathname = usePathname();
+  const authCtx = useAuth();
+
+  
+
   //const redirect = useAuthRoute(pathname);
-  /*
+  
   useEffect(()=>{
+    /*
     if(typeof redirect !='undefined'){
       router.push(redirect);
+    }*/
+    if(!authCtx.isLoggedIn){
+      router.push('/login');
     }
-  },[])
-  */
+  },[authCtx.isLoggedIn,router])
+  
 
   //useProtection();
   const [sidebarOpen, setSidebarOpen] = useState(false);
