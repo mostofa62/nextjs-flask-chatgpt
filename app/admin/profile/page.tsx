@@ -60,6 +60,7 @@ const PdfProcessList=()=> {
 ) .then(function (response) {
   //console.log(response);
   if(response.data.user){
+    authCtx.selectedName(response.data.user.name);
     router.push('/admin/profile');
   }
 })
@@ -76,7 +77,8 @@ const PdfProcessList=()=> {
         initialValues={{ user }}
         enableReinitialize
         validationSchema={userSchema}
-
+        validateOnChange={false}
+        validateOnBlur={false}
         onSubmit={handleFormSubmit}
 
         render={({isValid, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
@@ -141,7 +143,7 @@ type="password" name="user.password" placeholder="password" />
 </div>
 <div className="w-full">
 <button 
-disabled={!isValid || isSubmitting} type="submit"
+disabled={isSubmitting} type="submit"
  className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
   Save
 </button>

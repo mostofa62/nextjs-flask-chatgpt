@@ -17,11 +17,12 @@ export default object().shape({
               .test(
                 'emal-backend-validation',  // Name
                 'Email is already in use',               // Msg
-                async (email) => {
+                async (email,context) => {
                   // Res from backend will be flag at res.data.success, true for 
                   // username good, false otherwise
+                  console.log(context);
                   const { data: { success } } = await axios.post(
-                    `${url}userbyemail`, 
+                    `${url}userbyemail/${context.parent.token}`, 
                     { email: email }
                   );
         

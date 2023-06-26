@@ -13,7 +13,7 @@ interface AuthContextType{
     logout:()=>void,
     selectedCat:(chatCategory:any)=>void
     selectedMsg:(activeMessageId:string|undefined|null)=>void
-    
+    selectedName:(displayName:string|undefined|null)=>void
 
 }
 
@@ -30,7 +30,8 @@ const AuthContext = createContext<AuthContextType>({
     login:(token:string, expirationTime:Date, role:string,displayName:string, userId:string)=>{},
     logout:()=>{},
     selectedCat:(chatCategory:Object | null|undefined)=>{},
-    selectedMsg:(activeMessageId:string|undefined|null)=>{}    
+    selectedMsg:(activeMessageId:string|undefined|null)=>{},
+    selectedName:(displayName:string|undefined|null) =>{}   
 
 });
 
@@ -182,6 +183,15 @@ export const AuthContextProvider = (props:any)=>{
             localStorage.setItem('activeMessageId',activeMessageId);
         }
     }
+
+    const selectedDisplayNamehandler=(displayName:string | null|undefined)=>{
+        if(typeof window !== 'undefined' 
+        && typeof displayName != 'undefined' 
+        && displayName!==null){
+            setDisplayName(displayName);
+            localStorage.setItem('DisplayName',displayName);
+        }
+    }
     
     
 
@@ -203,7 +213,8 @@ export const AuthContextProvider = (props:any)=>{
         login:loginHandler,
         logout :logoutHandler,
         selectedCat:selectedCatHandler,
-        selectedMsg:selectedMsgandler        
+        selectedMsg:selectedMsgandler,
+        selectedName:selectedDisplayNamehandler        
     };
     return <AuthContext.Provider value={contextValue}>
     {props.children}

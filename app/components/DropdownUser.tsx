@@ -16,7 +16,13 @@ const DropdownUser = () => {
   const {isLoggedIn} = authContext;
   const router = useRouter()
 
-  
+  const [displayName, setDisplayName] = useState("");
+
+  useEffect(()=>{
+    if(authContext.displayName){
+      setDisplayName(authContext.displayName);
+    }
+  },[authContext.displayName])
 
   const logoutHandler = async()=>{
     
@@ -88,7 +94,7 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-lg font-bold text-[#f1e56c] dark:text-white">
-            {authContext.displayName}
+            {displayName}
           </span>
           {/*
           <span className="block text-xs">UX Designer</span>

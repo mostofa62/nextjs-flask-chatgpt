@@ -32,10 +32,10 @@ const FullPageLayout = ({ children }: DefaultLayoutProps) => {
     if(typeof redirect !='undefined'){
       router.push(redirect);
     }*/
-    if(!authCtx.isLoggedIn){
+    if(!authCtx.isLoggedIn && pathname!='/'){
       router.push('/login');
     }
-  },[authCtx.isLoggedIn,router])
+  },[authCtx.isLoggedIn,router,pathname])
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (

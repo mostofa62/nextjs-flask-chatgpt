@@ -7,6 +7,9 @@ import axios from "axios";
 import Link from 'next/link';
 
 const url = process.env.url;
+const per_page:any = process.env.per_page;
+const per_page_list:any = process.env.per_page_list;
+
 
   interface ContainerProps {
     children: React.ReactNode
@@ -88,7 +91,7 @@ const PdfProcessList=()=> {
   const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [totalRows, setTotalRows] = useState(0);
-	const [perPage, setPerPage] = useState(2);
+	const [perPage, setPerPage] = useState(per_page);
 
   const fetchUsers = async (page:number) => {
 		setLoading(true);
@@ -131,7 +134,7 @@ const PdfProcessList=()=> {
 			paginationServer
       paginationPerPage={perPage}
 			paginationTotalRows={totalRows}
-      paginationRowsPerPageOptions={[2,4,8,12,15]}
+      paginationRowsPerPageOptions={per_page_list}
 			onChangeRowsPerPage={handlePerRowsChange}
 			onChangePage={handlePageChange}
       theme="solarized"

@@ -50,7 +50,7 @@ const SidebarCategoryForm = (props:any)=>{
       authCtx.selectedCat(values.message.category);
       props.CloseOpenChat();
       actions.resetForm();
-      const response = await axios.get(`${url}get-message/${authCtx.userId}/${values.message.category.value}`);
+      const response = await axios.get(`${url}get-message/${authCtx.userId}/${values.message.category.value}/${authCtx.activeMessageId}`);
       
       authCtx.selectedMsg(response.data.msgid);
       router.push('/user');
