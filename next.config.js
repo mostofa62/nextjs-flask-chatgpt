@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-
+  basePath: '/app',
     env: {
         url: 'http://nilphamaricity.com/api/',
         per_page:10,
