@@ -39,6 +39,11 @@ const PdfUpload=()=> {
   const [chatMessages, setChatMessages] = useState("");
   const [conversations, setConversations] = useState(convArray);
 
+  const [selectedCat,setSelectedCat] = useState("");
+
+
+
+
   const fetchActiveConversation=useCallback(async(page:number)=>{
     //const newPerPage=5
     const {data} = await axios.get(`${url}message-list/${authCtx.userId}?page=${page}&per_page=${newPerPage}`);
@@ -69,6 +74,12 @@ const PdfUpload=()=> {
       fetchActiveConversation(1);
     }
   },[authCtx.userId,fetchActiveConversation])
+  useEffect(()=>{
+    console.log(authCtx.chatCategory);
+    if(authCtx.chatCategory){
+      setSelectedCat(authCtx.chatCategory);
+    }
+  },[authCtx.chatCategory])
 
   //const chatInputRef = useRef<HTMLInputElement>(null);
   const chatMessageonChange = (e: React.FormEvent<HTMLInputElement>): void => {
@@ -89,10 +100,14 @@ const PdfUpload=()=> {
       index:user_index
     };
     
+    
     setConversations([
       ...conversations,
       message_json
     ]);
+
+    setChatMessages("");
+
     
     const { data } = await axios.post(`${url}message/${authCtx.activeMessageId}`, message_json);
     
@@ -123,8 +138,7 @@ const PdfUpload=()=> {
     //console.log(conversations);
 
     
-    setChatMessages("");
-
+    
 
   }
   const convToActiveMsg=(activeMsgid:string)=>{
@@ -199,7 +213,7 @@ const PdfUpload=()=> {
                       
                       <div className='w-full'>
                         <h5 onClick={convToActiveMsg.bind(null,object._id)} className='text-sm font-medium text-black dark:text-white'>
-                          {object.category}
+                          {object.last_message}
                         </h5>
                         <p className='text-sm'>{object.updated_at}</p>
                       </div>
@@ -228,9 +242,9 @@ const PdfUpload=()=> {
                 </div>
                 <div className="w-full min-w-full">
                   <h5 className='font-medium text-black dark:text-white'>
-                    {authCtx.displayName}
+                    {selectedCat}
                   </h5>
-                  <p className='text-sm'>Reply to message</p>
+                  {/*<p className='text-sm'>Reply to message</p>*/}
                 </div>
               </div>
               <div>
@@ -241,8 +255,8 @@ const PdfUpload=()=> {
               {conversations.map((converse)=>{
                 return(
                 <div key={converse.index}>
-              {converse.user !=='bot'?  
-              <div className='max-w-125' >
+              {converse.user =='bot'?  
+              <div className='ml-auto max-w-125' >
                 <p className='mb-2.5 text-sm font-medium'>{converse.username}</p>
                 <div className='mb-2.5 rounded-2xl rounded-tl-none bg-gray py-3 px-5 dark:bg-boxdark-2'>
                   <p>
@@ -252,7 +266,8 @@ const PdfUpload=()=> {
                 <p className='text-xs'>{converse.datetime}</p>
               </div>
               :
-              <div className='ml-auto max-w-125'>
+              <div className='max-w-125'>
+                <p className='mb-2.5 text-sm font-medium'>{converse.username}</p>
                 <div className='mb-2.5 rounded-2xl rounded-br-none bg-primary py-3 px-5'>
                   <p className='text-white'>
                   {converse.message}

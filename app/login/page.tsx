@@ -143,7 +143,7 @@ const PdfUpload=()=> {
                   </label>
                   <div className="relative">
                   <Field 
-                  className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-[#f1e56c] focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                  className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-[#f1e56c] focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-[#f1e56c]"
 
 type="email" name="user.email" placeholder="email of person" />
       {errors.user &&
@@ -185,7 +185,7 @@ type="email" name="user.email" placeholder="email of person" />
   </label>
   <div className="relative">
   <Field 
-                 className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-[#f1e56c] focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                 className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-[#f1e56c] focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-[#f1e56c]"
 type="password" name="user.password" placeholder="password" />
       {errors.user &&
                                         

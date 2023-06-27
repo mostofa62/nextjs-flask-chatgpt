@@ -38,6 +38,7 @@ export default function CategoryFileUploader(props: FileUploaderProps) {
     const [fileStatus, setFileStatus] = useState<{ [key: string]: string }>({});
     const [fileId, setFileID] = useState<{ [key: string]: string }>({});
     const [processId, setProcessId] = useState<{ [key: string]: string }>({});
+    const [processSucsID, setProcessSucsID] = useState<{ [key: string]: number }>({});
     const [uploadError, setUploadError] = useState<string | null>(null);
     const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
 
@@ -54,8 +55,9 @@ export default function CategoryFileUploader(props: FileUploaderProps) {
     }
     //do process the uploade file
     const processFile=async(id:string)=>{
+        setProcessId(prev => ({ ...prev, [id]: "Please wait inserting.."}));
         const response = await axios.get(`${url}process_single/${id}`);
-        setProcessId(prev => ({ ...prev, [id]: "Processing.."}));
+        
         if(response.data.done_split > 0){         
             setProcessId(getFilterObject(processId,id))               
             setFileID(getFilterObject(fileId,id));
@@ -289,12 +291,13 @@ export default function CategoryFileUploader(props: FileUploaderProps) {
                                             :
                                             <FaTimes className="text-xl text-red-500 mr-4" />
                                     }
+                                    
                                     {
                                         fileId[fileName]
                                         ?
-                                        processId[fileId[fileName]]?processId[fileId[fileName]]:
-                                        <span onClick={processFile.bind(null,fileId[fileName])} className='inline-flex items-center justify-center rounded-md border border-[#f1e56c] py-2 px-10 text-center font-medium bg-black text-[#f1e56c] hover:bg-opacity-90 lg:px-8 xl:px-10'>
-                                            Do Proecess</span>
+                                        processId[fileId[fileName]] ?processId[fileId[fileName]]:                                        
+                                        <span onClick={processFile.bind(null,fileId[fileName])} className='inline-flex items-center justify-center rounded-md border border-[#f1e56c] py-2 px-10 text-center font-medium bg-black text-[#f1e56c] hover:bg-opacity-90 lg:px-8 xl:px-10 cursor-pointer'>
+                                            Submit </span>
                                         :null
                                     }
                                 </>

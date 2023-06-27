@@ -93,7 +93,7 @@ const DropdownUser = () => {
         href={(Loguser && Loguser == '1')?'/admin':'/user'}
       >
         <span className="hidden text-right lg:block">
-          <span className="block text-lg font-bold text-[#f1e56c] dark:text-white">
+          <span className="block text-sm font-bold text-[#f1e56c] dark:text-white">
             {displayName}
           </span>
           {/*

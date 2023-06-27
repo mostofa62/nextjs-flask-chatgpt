@@ -123,6 +123,10 @@ const PdfProcessList=()=> {
 
   return (
     <DefaultLayout>
+      <Link 
+      className="inline-flex items-center justify-center rounded-md border border-[#f1e56c] mb-2 py-2 px-10 text-center font-medium text-[#f1e56c] hover:bg-opacity-90 lg:px-8 xl:px-10" 
+      href="/admin/users/create">Create
+      </Link>
         
         <DataTable
 			title="User List"

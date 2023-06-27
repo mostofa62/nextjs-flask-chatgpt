@@ -7,11 +7,11 @@ interface AuthContextType{
     isLoggedIn:boolean,
     userId:string|undefined|null,
     role:string|undefined|null,
-    chatCategory:any,
+    chatCategory:string|undefined|null,
     activeMessageId:string|undefined|null,
     login:(token:string, expirationTime:Date, role:string,displayName:string, userId:string)=>void,
     logout:()=>void,
-    selectedCat:(chatCategory:any)=>void
+    selectedCat:(chatCategory:string|undefined|null)=>void
     selectedMsg:(activeMessageId:string|undefined|null)=>void
     selectedName:(displayName:string|undefined|null)=>void
 
@@ -25,11 +25,11 @@ const AuthContext = createContext<AuthContextType>({
     isLoggedIn: false,
     role:null,
     userId:null,
-    chatCategory:{"value":"","label":""},
+    chatCategory:null,
     activeMessageId:null,
     login:(token:string, expirationTime:Date, role:string,displayName:string, userId:string)=>{},
     logout:()=>{},
-    selectedCat:(chatCategory:Object | null|undefined)=>{},
+    selectedCat:(chatCategory:string | null|undefined)=>{},
     selectedMsg:(activeMessageId:string|undefined|null)=>{},
     selectedName:(displayName:string|undefined|null) =>{}   
 
@@ -109,24 +109,23 @@ export const AuthContextProvider = (props:any)=>{
     let intialMsgId;
     let initUserId;
     let initDisplayName;
+    let initCategory;
     if(tokenData){
         initialToken = tokenData.token;
         intialMsgId = tokenData.activeMessageId;
         initUserId = tokenData.userId;
         initDisplayName = tokenData.displayName;
+        initCategory = tokenData.chatCategory;
     }
     const [token , setToken] = useState(initialToken);
     const [msgId , setMsgId] = useState(intialMsgId);
     const [userId, setUserId] = useState(initUserId);
     const [displayName, setDisplayName ] = useState(initDisplayName);
+    const [category,setCategory] = useState(initCategory)
     const userIsLoggedIn = !!token;
     const role = tokenData?.role;
     
-    let chatCategory = tokenData?.chatCategory;
     
-    if(typeof chatCategory !='undefined' && chatCategory!==null){
-        chatCategory = JSON.parse(chatCategory);
-    }
 
     
     
@@ -165,11 +164,12 @@ export const AuthContextProvider = (props:any)=>{
         //logoutTimer =  setTimeout(logoutHandler, 3000);
     };
 
-    const selectedCatHandler=(chatCategory:Object | null|undefined)=>{
+    const selectedCatHandler=(chatCategory:string | null|undefined)=>{
         if(typeof window !== 'undefined' 
         && typeof chatCategory != 'undefined' 
         && chatCategory!==null){
-            localStorage.setItem('chatCategory',JSON.stringify(chatCategory));
+            setCategory(chatCategory);
+            localStorage.setItem('chatCategory',chatCategory);
         }
     }
 
@@ -208,7 +208,7 @@ export const AuthContextProvider = (props:any)=>{
         role:role,
         displayName:displayName,
         userId:userId,
-        chatCategory:chatCategory,
+        chatCategory:category,
         activeMessageId:msgId,
         login:loginHandler,
         logout :logoutHandler,
