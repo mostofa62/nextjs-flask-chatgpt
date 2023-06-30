@@ -21,7 +21,7 @@ const per_page_list:any = process.env.per_page_list;
 const PdfProcessList=()=> {
 
   //const [procssingpdf, setProcssingpdf] = useState(false);
-  
+  console.log(url);
 
   const handleButtonClick = async(state:any) => {
     //console.log('clicked');
