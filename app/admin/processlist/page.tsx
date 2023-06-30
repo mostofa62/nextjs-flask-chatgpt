@@ -18,7 +18,7 @@ const per_page_list:any = process.env.per_page_list;
       {children}
     </div>
   )
-const PdfProcessList=()=> {
+const ManagePDF=()=> {
 
   //const [procssingpdf, setProcssingpdf] = useState(false);
   console.log('ComponentLoad:',url);
@@ -121,7 +121,7 @@ const PdfProcessList=()=> {
     setCurrentPage(page);
 		setLoading(false);
 	};
-
+v
 	useEffect(() => {
     console.log('URL here :',url)
 		fetchProcess(currentPage); // fetch page 1 of users
@@ -153,4 +153,4 @@ const PdfProcessList=()=> {
   )
 }
 
-export default PdfProcessList;
+export default ManagePDF;
