@@ -131,7 +131,7 @@ const ManagePDF=()=> {
 
   return (
     <DefaultLayout>
-        <Container>
+        
         <DataTable
 			title="Manage PDF"
 			columns={columns}
@@ -148,7 +148,7 @@ const ManagePDF=()=> {
 
 		/>
       
-        </Container>    
+            
     </DefaultLayout>
   )
 }
