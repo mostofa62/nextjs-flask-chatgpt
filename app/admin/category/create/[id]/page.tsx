@@ -15,7 +15,7 @@ const url = process.env.url;
   }
   
   const Container = ({ children }: ContainerProps) => (
-    <div className="flex flex-col items-center justify-between gap-4 min-h-60 bg-zinc-800 w-full max-w-2xl py-10 px-4 rounded-xl h-fit">
+    <div className="flex flex-col items-center justify-between gap-4 min-h-60 bg-zinc-800 w-full py-10 px-4 rounded-xl h-fit">
       {children}
     </div>
   )
@@ -105,7 +105,7 @@ const PdfProcessList=({
                                             </span>   
                                         )}
 </div>
-<div>
+<div className="my-3">
                 <label className="mb-3 block text-black dark:text-white">
                   Value
                 </label>
@@ -126,7 +126,7 @@ const PdfProcessList=({
 </div>
 
 
-<div className="w-full">
+<div className="w-full my-5">
 <button 
 disabled={!isValid || isSubmitting} type="submit"
  className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">

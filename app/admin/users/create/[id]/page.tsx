@@ -30,21 +30,22 @@ const PdfProcessList=({
   const router = useRouter()
   
  
-  
+  const id = params.id;
 
-  const [userdata,setUserdata] = useState({
+
+  const [userdata,setUserdata] = useState({    
     name:'',
     email:'',
     password:'',
   });
 
   
-  const id = params.id;
   const fetchUser=async()=>{
     //console.log(id);
     const response = await axios.get(`${url}users/${id}`);
     //return response.data.user;
-    setUserdata(response.data.user);
+    
+    setUserdata({id,...response.data.user});
   };
   useEffect(()=>{
     fetchUser();
@@ -83,13 +84,15 @@ const PdfProcessList=({
         initialValues={{ user }}
         enableReinitialize
         validationSchema={userSchema}
+        validateOnChange={false}
+        validateOnBlur={false}
 
         onSubmit={handleFormSubmit}
 
         render={({isValid, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
 
       <Form >
-        <div>
+        <div className="my-3">
                 <label className="mb-3 block text-black dark:text-white">
                   Name
                 </label>
@@ -108,7 +111,7 @@ const PdfProcessList=({
                                             </span>   
                                         )}
 </div>
-<div>
+<div className="my-3">
                 <label className="mb-3 block text-black dark:text-white">
                   Email
                 </label>
@@ -127,7 +130,7 @@ type="email" name="user.email" placeholder="email of person" />
                                             </span>   
                                         )}
 </div>
-<div>
+<div className="my-3">
                 <label className="mb-3 block text-black dark:text-white">
                   Password
                 </label>
@@ -146,9 +149,9 @@ type="password" name="user.password" placeholder="password" />
                                             </span>   
                                         )}                                        
 </div>
-<div className="w-full">
+<div className="w-full my-5">
 <button 
-disabled={!isValid || isSubmitting} type="submit"
+disabled={isSubmitting} type="submit"
  className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
   Save
 </button>

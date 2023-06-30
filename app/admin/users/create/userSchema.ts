@@ -20,9 +20,10 @@ export default object().shape({
                 async (email,context) => {
                   // Res from backend will be flag at res.data.success, true for 
                   // username good, false otherwise
-                  console.log(context);
+                  //console.log(context);
+                  
                   const { data: { success } } = await axios.post(
-                    `${url}userbyemail/${context.parent.token}`, 
+                    `${url}userbyemail/${context.parent.id}`, 
                     { email: email }
                   );
         

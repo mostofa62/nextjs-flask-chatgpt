@@ -37,7 +37,7 @@ const PdfProcessList=()=> {
     //console.log(id);
     const response = await axios.get(`${url}users/${id}`);
     //return response.data.user;
-    setUserdata(response.data.user);
+    setUserdata({id,...response.data.user});
   };
   useEffect(()=>{
     fetchUser();
@@ -103,7 +103,7 @@ const PdfProcessList=()=> {
                                             </span>   
                                         )}
 </div>
-<div>
+<div className="my-3">
                 <label className="mb-3 block text-black dark:text-white">
                   Email
                 </label>
@@ -122,7 +122,7 @@ type="email" name="user.email" placeholder="email of person" />
                                             </span>   
                                         )}
 </div>
-<div>
+<div className="my-3">
                 <label className="mb-3 block text-black dark:text-white">
                   Password
                 </label>
@@ -141,7 +141,7 @@ type="password" name="user.password" placeholder="password" />
                                             </span>   
                                         )}                                        
 </div>
-<div className="w-full">
+<div className="w-full my-5">
 <button 
 disabled={isSubmitting} type="submit"
  className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">

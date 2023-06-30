@@ -61,7 +61,7 @@ const PdfProcessList=()=> {
         render={({isValid, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
 
       <Form >
-        <div>
+        <div className="my-3">
                 <label className="mb-3 block text-black dark:text-white">
                   Label
                 </label>
@@ -80,7 +80,7 @@ const PdfProcessList=()=> {
                                             </span>   
                                         )}
 </div>
-<div>
+<div className="my-3">
                 <label className="mb-3 block text-black dark:text-white">
                   Value
                 </label>
@@ -100,7 +100,7 @@ const PdfProcessList=()=> {
                                         )}
 </div>
 
-<div className="w-full">
+<div className="w-full my-5">
 <button 
 disabled={!isValid || isSubmitting} type="submit"
  className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">

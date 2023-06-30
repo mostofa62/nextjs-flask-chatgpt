@@ -1,7 +1,7 @@
 "use client";
 import DefaultLayout from "@/app/layout/DefaultLayout"
 //import Chat from "./components/Chat";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import DataTable,{createTheme} from 'react-data-table-component';
 import axios from "axios";
 
@@ -21,6 +21,7 @@ const per_page_list:any = process.env.per_page_list;
 const PdfProcessList=()=> {
 
   //const [procssingpdf, setProcssingpdf] = useState(false);
+  
 
   const handleButtonClick = async(state:any) => {
     //console.log('clicked');
@@ -30,7 +31,7 @@ const PdfProcessList=()=> {
     const response = await axios.get(`${url}process_single/${state.target.id}`);
     if(response.data.done_split > 0){
       setLoading(false);
-      fetchUsers(1)
+      //fetchProcess(1)
     }
   };
   
@@ -47,14 +48,14 @@ const PdfProcessList=()=> {
       sortable: true,
     },
     {
-      name: 'Processed',
+      name: 'Managed',
       cell:(row:any) => {
         if(row.processed < 1)
         return (<button className="text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded" onClick={handleButtonClick} id={row._id}>
-          Do Process
+          Submit
         </button>)
         else
-         return <span className="btn btn-primary">Already Processed</span>
+         return <span className="btn btn-primary">Already Submitted</span>
         
         
       },
@@ -91,18 +92,20 @@ const PdfProcessList=()=> {
 	const [loading, setLoading] = useState(false);
 	const [totalRows, setTotalRows] = useState(0);
 	const [perPage, setPerPage] = useState(per_page);
+  const [currentPage, setCurrentPage]=useState(1);
 
-  const fetchUsers = async (page:number) => {
+  const fetchProcess = useCallback(async (page:number) => {
 		setLoading(true);
-    const response = await axios.get(`${url}processpdf?page=${page}&per_page=${perPage}&delay=1`);
-
+    const response = await axios.get(`${url}processpdf?page=${page}&per_page=${perPage}`);
+    setCurrentPage(page);
 		setData(response.data.data);
 		setTotalRows(response.data.total);
 		setLoading(false);
-	};
+	},[perPage]);
 
 	const handlePageChange = (page:number) => {
-		fetchUsers(page);
+    setCurrentPage(page);
+		fetchProcess(page);
 	};
 
 	const handlePerRowsChange = async (newPerPage:number, page:number) => {
@@ -112,20 +115,21 @@ const PdfProcessList=()=> {
 
 		setData(response.data.data);
 		setPerPage(newPerPage);
+    setCurrentPage(page);
 		setLoading(false);
 	};
 
 	useEffect(() => {
-		fetchUsers(1); // fetch page 1 of users
+		fetchProcess(currentPage); // fetch page 1 of users
 		
-	}, []);
+	}, [currentPage,fetchProcess]);
 
 
   return (
     <DefaultLayout>
         <Container>
         <DataTable
-			title="Process PDF List"
+			title="Manage PDF"
 			columns={columns}
 			data={data}
 			progressPending={loading}

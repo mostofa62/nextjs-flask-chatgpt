@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
   }
   
   const Container = ({ children }: ContainerProps) => (
-    <div className="flex flex-col items-center justify-between gap-2 min-h-60 bg-zinc-800 w-full max-w-2xl py-10 px-4 rounded-xl h-fit">
+    <div className="flex flex-col items-center justify-between bg-zinc-800 w-full py-10 px-4 rounded-xl h-fit">
       {children}
     </div>
   )
@@ -55,6 +55,8 @@ const PdfProcessList=()=> {
         <Formik
         initialValues={{ user }}
         /*validationSchema={userSchema}*/
+        validateOnChange={false}
+        validateOnBlur={false}
         validate={async (value) => {
           try {
             await validateYupSchema(value, userSchema, false, {'newentry':'1'});
@@ -70,8 +72,8 @@ const PdfProcessList=()=> {
         render={({isValid, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
 
       <Form >
-        <div>
-                <label className="mb-3 block text-black dark:text-white">
+        <div className="my-3">
+                <label className="mb-1 block text-black dark:text-white">
                   Name
                 </label>
       <Field 
@@ -89,8 +91,8 @@ const PdfProcessList=()=> {
                                             </span>   
                                         )}
 </div>
-<div>
-                <label className="mb-3 block text-black dark:text-white">
+<div className="my-3">
+                <label className="mb-1 block text-black dark:text-white">
                   Email
                 </label>
 <Field 
@@ -108,8 +110,8 @@ type="email" name="user.email" placeholder="email of person" />
                                             </span>   
                                         )}
 </div>
-<div>
-                <label className="mb-3 block text-black dark:text-white">
+<div className="my-3">
+                <label className="mb-1 block text-black dark:text-white">
                   Password
                 </label>
 <Field 
@@ -127,9 +129,9 @@ type="password" name="user.password" placeholder="password" />
                                             </span>   
                                         )}                                        
 </div>
-<div className="w-full">
+<div className="w-full my-5">
 <button 
-disabled={!isValid || isSubmitting} type="submit"
+disabled={isSubmitting} type="submit"
  className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
   Save
 </button>
