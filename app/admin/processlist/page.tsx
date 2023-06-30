@@ -21,7 +21,7 @@ const per_page_list:any = process.env.per_page_list;
 const PdfProcessList=()=> {
 
   //const [procssingpdf, setProcssingpdf] = useState(false);
-  console.log(url);
+  console.log('ComponentLoad:',url);
 
   const handleButtonClick = async(state:any) => {
     //console.log('clicked');
@@ -95,6 +95,7 @@ const PdfProcessList=()=> {
   const [currentPage, setCurrentPage]=useState(1);
 
   const fetchProcess = useCallback(async (page:number) => {
+    console.log('fetchProcess:',url)
 		setLoading(true);
     const response = await axios.get(`${url}processpdf?page=${page}&per_page=${perPage}`);
     setCurrentPage(page);
@@ -104,13 +105,15 @@ const PdfProcessList=()=> {
 	},[perPage]);
 
 	const handlePageChange = (page:number) => {
+    console.log('handlePageChange:',url)
+
     setCurrentPage(page);
 		fetchProcess(page);
 	};
 
 	const handlePerRowsChange = async (newPerPage:number, page:number) => {
 		setLoading(true);
-
+    console.log('handlePerRowsChange:',url)
 		const response = await axios.get(`${url}processpdf?page=${page}&per_page=${newPerPage}&delay=1`);
 
 		setData(response.data.data);
