@@ -307,9 +307,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
               <li key={3}>
                 <Link
-                  href="/admin/processlist"
+                  href="/admin/managepdf"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('processlist') && 'bg-graydark dark:bg-meta-4'
+                    pathname.slice(-9) =='managepdf' && 'bg-graydark dark:bg-meta-4'
                   }`}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
