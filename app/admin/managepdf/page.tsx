@@ -82,7 +82,7 @@ const ManagePDFList = ()=>{
     const fetchProcess = useCallback(async (page:number) => {
             console.log('fetchProcess:',url)
             setLoading(true);
-            const response = await axios.get(`${url}processpdf?page=${page}&per_page=${perPage}`);
+            const response = await axios.get(`${url}pdflist?page=${page}&per_page=${perPage}`);
             setCurrentPage(page);
             setData(response.data.data);
             setTotalRows(response.data.total);
@@ -98,7 +98,7 @@ const ManagePDFList = ()=>{
     const handlePerRowsChange = async (newPerPage:number, page:number) => {
 		setLoading(true);
         console.log('handlePerRowsChange:',url)
-		const response = await axios.get(`${url}processpdf?page=${page}&per_page=${newPerPage}`);
+		const response = await axios.get(`${url}pdflist?page=${page}&per_page=${newPerPage}`);
 
 		setData(response.data.data);
 		setPerPage(newPerPage);
