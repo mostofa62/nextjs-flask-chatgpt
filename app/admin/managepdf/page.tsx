@@ -33,13 +33,20 @@ const ManagePDFList = ()=>{
         {
           name: 'Managed',
           cell:(row:any) => {
-            if(row.processed < 1)
-            return (<button className="text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded" onClick={handleButtonClick} id={row._id}>
+
+            return(
+              <div>
+                <button className="text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded" onClick={handleDeleteClick} id={row._id}>
+              Delete PDF
+            </button>
+
+            {row.processed < 1 ? <button className="text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded" onClick={handleButtonClick} id={row._id}>
               Submit
-            </button>)
-            else
-             return <span className="btn btn-primary">Already Submitted</span>
-            
+            </button>:
+              <span className="btn btn-primary">Already Submitted</span>
+            }
+              </div>
+            )
             
           },
           selector: (row:any) => row.processed,
@@ -78,6 +85,16 @@ const ManagePDFList = ()=>{
           fetchProcess(currentPage);
         }
     };
+
+    const handleDeleteClick = async(state:any) => {
+        
+      setLoading(true);
+      const response = await axios.get(`${url}delete_single/${state.target.id}`);
+      if(response.data.done_delete > 0){
+        setLoading(false);
+        fetchProcess(currentPage);
+      }
+  };
 
     const fetchProcess = useCallback(async (page:number) => {
             console.log('fetchProcess:',url)

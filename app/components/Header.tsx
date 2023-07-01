@@ -63,8 +63,8 @@ const Header = (props: {
           </button>
           {/* <!-- Hamburger Toggle BTN --> */}
 
-          <Link className="block flex-shrink-0 lg:hidden" href={(Loguser && Loguser == '1')?'/admin':'/user'}>
-            <Image src={LogoIcon} alt="Logo" />
+          <Link className="block flex-shrink-0 lg:hidden mx-28" href={(Loguser && Loguser == '1')?'/admin':'/user'}>
+            <Image  src={LogoIcon} alt="Logo" height={50} />
           </Link>
         </div>
 
