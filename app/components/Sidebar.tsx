@@ -49,10 +49,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 	};
 
   const choosenCategory = async(category:any)=>{
-    authCtx.selectedCat(category.label);
     const {data} = await axios.get(`${url}get-message/${authCtx.userId}/${category.value}/${authCtx.activeMessageId}`);
+    authCtx.selectedCat(category.label);
     authCtx.selectedMsg(data.msgid);
-    location.push('/user');
+    //location.push('/user');
   }
 
   const logoutHandler = async()=>{
@@ -217,7 +217,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     </path>
                   </svg>
 
-                        NEW CONVERSATION
+                        New Conversation
                         <svg
                           className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
                             open && 'rotate-180'

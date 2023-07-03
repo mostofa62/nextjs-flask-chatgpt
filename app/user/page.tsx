@@ -41,8 +41,21 @@ const PdfUpload=()=> {
 
   const [selectedCat,setSelectedCat] = useState("");
 
+  const [searchConversation,setSearchConversation] = useState("");
 
 
+  const ClearChat = ()=>{
+    authCtx.selectedMsg("");
+    authCtx.selectedCat("");
+    authCtx.chatCategory=null;
+    authCtx.activeMessageId=null;
+    setChatMessages("");
+    setConversations(convArray);
+    setSelectedCat("");
+    
+    //authCtx.chatCategory=null;
+    //authCtx.activeMessageId=null;
+  }
 
   const fetchActiveConversation=useCallback(async(page:number)=>{
     //const newPerPage=5
@@ -57,17 +70,19 @@ const PdfUpload=()=> {
   const fetchConversation=useCallback(async()=>{
     const {data} = await axios.get(`${url}message/${authCtx.activeMessageId}`);
     if(data.conversations){
+      setSelectedCat(data.chatCategory);
+      authCtx.selectedCat(data.chatCategory);
       setConversations(data.conversations)
     }
     //console.log(response.data.conversations);
-  },[authCtx.activeMessageId,setConversations])
+  },[authCtx,setConversations])
 
   useEffect(()=>{
-    if(authCtx.activeMessageId){
+    if(authCtx.activeMessageId || authCtx.chatCategory){
       fetchConversation();
     }
   
-  },[authCtx.activeMessageId,fetchConversation])
+  },[authCtx.activeMessageId, authCtx.chatCategory,fetchConversation])
 
   useEffect(()=>{
     if(authCtx.userId){
@@ -75,7 +90,7 @@ const PdfUpload=()=> {
     }
   },[authCtx.userId,fetchActiveConversation])
   useEffect(()=>{
-    console.log(authCtx.chatCategory);
+    //console.log(authCtx.chatCategory);
     if(authCtx.chatCategory){
       setSelectedCat(authCtx.chatCategory);
     }
@@ -141,11 +156,37 @@ const PdfUpload=()=> {
     
 
   }
-  const convToActiveMsg=(activeMsgid:string)=>{
-    authCtx.selectedMsg(activeMsgid);
+  const convToActiveMsg=(activeMsgid:string, chatCategory:string)=>{
+    chatCategory = chatCategory == null? "":chatCategory;
     authCtx.activeMessageId = activeMsgid;
-    //alert(activeMsgid)
+    authCtx.chatCategory = chatCategory;
+    setSelectedCat(chatCategory);
+    authCtx.selectedMsg(activeMsgid);    
+    authCtx.selectedCat(chatCategory);
+    setConversations(convArray);
+    //alert(chatCategory)
     
+  }
+
+  const searchConversationHandler = (e:SyntheticEvent)=>{
+      e.preventDefault();
+      //alert(searchConversation);
+      if(searchConversation.length > 2){
+        let filtered_conversation = activeConversation.filter((converse)=>{
+        //console.log(converse.last_message);
+        //console.log(searchConversation);
+        //console.log(converse.last_message.search(searchConversation))
+        var matcher = new RegExp(searchConversation);
+        //let pattern = /searchConversation/;
+        return matcher.test(converse.last_message)
+      })
+      //console.log(filtered_conversation)
+      setActiveConversation(filtered_conversation);
+    }
+    else{
+      fetchActiveConversation(1);
+    }
+
   }
 
   useEffect(() => {
@@ -172,8 +213,12 @@ const PdfUpload=()=> {
             </div>
             
             <div className='flex max-h-full flex-col overflow-auto p-5'>
-              <form className='sticky mb-7'>
+              <form className='sticky mb-7' onSubmit={searchConversationHandler}>
                 <input
+                  value={searchConversation}
+                  onChange={(e)=>{
+                    setSearchConversation(e.target.value)
+                  }}
                   type='text'
                   className='w-full rounded border border-stroke bg-gray-2 py-2.5 pl-5 pr-10 text-sm outline-none focus:border-primary dark:border-strokedark dark:bg-boxdark-2'
                   placeholder='Search...'
@@ -212,7 +257,7 @@ const PdfUpload=()=> {
                     >
                       
                       <div className='w-full'>
-                        <h5 onClick={convToActiveMsg.bind(null,object._id)} className='text-sm font-medium text-black dark:text-white'>
+                        <h5 onClick={convToActiveMsg.bind(null,object._id,object.category)} className='text-sm font-medium text-black dark:text-white'>
                           {object.last_message}
                         </h5>
                         <p className='text-sm'>{object.updated_at}</p>
@@ -241,14 +286,14 @@ const PdfUpload=()=> {
               />*/}
                 </div>
                 <div className="w-full min-w-full">
-                  <h5 className='font-medium text-black dark:text-white'>
-                    {selectedCat}
+                  <h5 className='font-medium p-1 text-center text-black dark:text-white bg-graydark'>
+                    Selected Category: {selectedCat}
                   </h5>
                   {/*<p className='text-sm'>Reply to message</p>*/}
                 </div>
               </div>
               <div>
-                <DropdownDefault />
+                <DropdownDefault ClearChat={ClearChat}/>
               </div>
             </div>
             <div className='no-scrollbar max-h-full space-y-3.5 overflow-auto px-6 py-7.5'>

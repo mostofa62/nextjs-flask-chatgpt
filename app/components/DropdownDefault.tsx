@@ -1,11 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 
-const DropdownDefault = () => {
+const DropdownDefault = (props:any) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
 
+  const ClearChat =()=>{
+    setDropdownOpen(false);
+    props.ClearChat();
+  }
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -64,6 +68,7 @@ const DropdownDefault = () => {
           dropdownOpen === true ? "block" : "hidden"
         }`}
       >
+        {/*
         <button className="flex w-full items-center gap-2 rounded-sm py-1.5 px-4 text-left text-sm hover:bg-gray dark:hover:bg-meta-4">
           <svg
             className="fill-current"
@@ -87,7 +92,10 @@ const DropdownDefault = () => {
           </svg>
           Edit
         </button>
-        <button className="flex w-full items-center gap-2 rounded-sm py-1.5 px-4 text-left text-sm hover:bg-gray dark:hover:bg-meta-4">
+        */}
+        <button 
+        onClick={ClearChat}
+         className="flex w-full items-center gap-2 rounded-sm py-1.5 px-4 text-left text-sm hover:bg-gray dark:hover:bg-meta-4">
           <svg
             className="fill-current"
             width="16"
@@ -113,7 +121,7 @@ const DropdownDefault = () => {
               fill=""
             />
           </svg>
-          Delete
+          Clear Chat
         </button>
       </div>
     </div>

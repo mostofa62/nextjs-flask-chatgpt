@@ -133,6 +133,8 @@ export const AuthContextProvider = (props:any)=>{
     const logoutHandler= useCallback(()=>{
         setToken(null);
         setMsgId(null);
+        setCategory(null);
+        setDisplayName(null);
         removeAllFromStorage();
         if(logoutTimer){
             clearTimeout(logoutTimer);
@@ -168,8 +170,13 @@ export const AuthContextProvider = (props:any)=>{
         if(typeof window !== 'undefined' 
         && typeof chatCategory != 'undefined' 
         && chatCategory!==null){
-            setCategory(chatCategory);
-            localStorage.setItem('chatCategory',chatCategory);
+            if(chatCategory == ""){
+                setCategory(null);
+                localStorage.removeItem('chatCategory');
+            }else{
+                setCategory(chatCategory);
+                localStorage.setItem('chatCategory',chatCategory);
+            }
         }
     }
 
@@ -179,8 +186,13 @@ export const AuthContextProvider = (props:any)=>{
         if(typeof window !== 'undefined' 
         && typeof activeMessageId != 'undefined' 
         && activeMessageId!==null){
-            setMsgId(activeMessageId);
-            localStorage.setItem('activeMessageId',activeMessageId);
+            if(activeMessageId==""){
+                localStorage.removeItem('activeMessageId');
+                setMsgId(null);
+            }else{
+                setMsgId(activeMessageId);
+                localStorage.setItem('activeMessageId',activeMessageId);
+            }
         }
     }
 
