@@ -11,15 +11,7 @@ import useAuth from "@/app/hooks/useAuth";
 
 const url = process.env.url;
 
-  interface ContainerProps {
-    children: React.ReactNode
-  }
   
-  const Container = ({ children }: ContainerProps) => (
-    <div className="flex flex-col items-center justify-between gap-4 min-h-60 bg-zinc-800 w-full max-w-2xl py-10 px-4 rounded-xl h-fit">
-      {children}
-    </div>
-  )
 const PdfProcessList=()=> {
   
   const authCtx = useAuth();
@@ -72,7 +64,10 @@ const PdfProcessList=()=> {
  
   return (
     <DefaultLayout>
-        <Container>
+        <div className="flex md:mt-5">
+    <div className="md:w-2/12"></div>
+    <div className="md:w-8/12 sm:w-full">
+
         <Formik
         initialValues={{ user }}
         enableReinitialize
@@ -159,7 +154,9 @@ disabled={isSubmitting} type="submit"
       </Form>
         )}
       />
-        </Container>    
+        </div>
+        </div>
+        
     </DefaultLayout>
   )
 }

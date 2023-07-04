@@ -10,15 +10,7 @@ import categorySchema from "../categorySchema";
 
 const url = process.env.url;
 
-  interface ContainerProps {
-    children: React.ReactNode
-  }
   
-  const Container = ({ children }: ContainerProps) => (
-    <div className="flex flex-col items-center justify-between gap-4 min-h-60 bg-zinc-800 w-full py-10 px-4 rounded-xl h-fit">
-      {children}
-    </div>
-  )
 const PdfProcessList=({
   params,
   searchParams
@@ -75,7 +67,9 @@ const PdfProcessList=({
  
   return (
     <DefaultLayout>
-        <Container>
+      <div className="flex md:mt-5">
+    <div className="md:w-2/12"></div>
+    <div className="md:w-8/12 sm:w-full">
         <Formik
         initialValues={{ category }}
         enableReinitialize
@@ -144,7 +138,8 @@ disabled={!isValid || isSubmitting} type="submit"
       </Form>
         )}
       />
-        </Container>    
+        </div>
+        </div>    
     </DefaultLayout>
   )
 }

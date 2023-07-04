@@ -176,7 +176,7 @@ const PdfUpload=()=> {
         //console.log(converse.last_message);
         //console.log(searchConversation);
         //console.log(converse.last_message.search(searchConversation))
-        var matcher = new RegExp(searchConversation);
+        var matcher = new RegExp(searchConversation, "i");
         //let pattern = /searchConversation/;
         return matcher.test(converse.last_message)
       })

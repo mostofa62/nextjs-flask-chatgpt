@@ -8,15 +8,7 @@ import axios from "axios";
 
 const url = process.env.url;
 
-  interface ContainerProps {
-    children: React.ReactNode
-  }
   
-  const Container = ({ children }: ContainerProps) => (
-    <div className="flex flex-col items-center justify-between gap-1 min-h-60 bg-zinc-800 w-full max-w-3xl py-2 px-4 rounded-xl h-fit">
-      {children}
-    </div>
-  )
 
     
 
@@ -50,8 +42,10 @@ const PdfUpload=()=> {
 
   return (
     <DefaultLayout>
-      <Container>
-      
+    <div className="flex">
+    <div className="md:w-2/12"></div>
+    <div className="md:w-8/12 sm:w-full">
+
     <SelectField
     defaultValueArray={[]}
     placeholder='Choose a Category'
@@ -67,10 +61,6 @@ const PdfUpload=()=> {
     setCategory(options);
   }}
     />
-
-      </Container>
-        
-        <Container>
         {category !== null && typeof category.value!='undefined' && category?.value !=null &&
         <CategoryFileUploader
           url={url+""}
@@ -86,7 +76,8 @@ const PdfUpload=()=> {
 
         />
 }
-        </Container>    
+</div>
+</div>
     </DefaultLayout>
   )
 }

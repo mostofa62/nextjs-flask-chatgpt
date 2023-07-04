@@ -1,7 +1,7 @@
 "use client";
 import DefaultLayout from "@/app/layout/DefaultLayout";
 //import Chat from "./components/Chat";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import {Formik, Form, Field} from 'formik';
 import userSchema from "@/app/admin/users/create/userSchema";
@@ -11,15 +11,7 @@ import useAuth from "@/app/hooks/useAuth";
 
 const url = process.env.url;
 
-  interface ContainerProps {
-    children: React.ReactNode
-  }
   
-  const Container = ({ children }: ContainerProps) => (
-    <div className="flex flex-col items-center justify-between gap-4 min-h-60 bg-zinc-800 w-full max-w-2xl py-10 px-4 rounded-xl h-fit">
-      {children}
-    </div>
-  )
 const PdfProcessList=()=> {
   
   const authCtx = useAuth();
@@ -33,16 +25,16 @@ const PdfProcessList=()=> {
 
   
   const id = authCtx.userId;
-  const fetchUser=async()=>{
+  const fetchUser=useCallback(async()=>{
     //console.log(id);
     const response = await axios.get(`${url}users/${id}`);
     //return response.data.user;
     setUserdata({id,...response.data.user});
-  };
+  },[id]);
   useEffect(()=>{
     fetchUser();
   
-  },[]);
+  },[fetchUser]);
   const user =userdata;
   user.password = '';
   //console.log(user)
@@ -74,7 +66,6 @@ const PdfProcessList=()=> {
  
   return (
     <DefaultLayout>
-        <Container>
         <Formik
         initialValues={{ user }}
         enableReinitialize
@@ -87,7 +78,9 @@ const PdfProcessList=()=> {
 
         render={({isValid, isSubmitting,values,errors, touched, setFieldValue, setFieldTouched})=>(
 
-      <Form >
+      <Form className="flex">
+        <div className="md:w-2/12"></div>
+        <div className="md:w-8/12 sm:w-full">
         <div className="my-3">
                 <label className="mb-3 block text-black dark:text-white">
                   Name
@@ -160,10 +153,10 @@ disabled={isSubmitting} type="submit"
                         <pre>Errors: {JSON.stringify(errors, null, 2)}</pre>
                     </code>
                                         */}
+                                        </div>
       </Form>
         )}
       />
-        </Container>    
     </DefaultLayout>
   )
 }

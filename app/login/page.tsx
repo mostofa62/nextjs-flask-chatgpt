@@ -152,7 +152,7 @@ type="email" name="user.email" placeholder="email of person" />
                                         touched.user &&
                                         
                                         touched.user.email && ( 
-                                            <span className="mb-3 font-semibold text-[#B45454]">
+                                            <span className="mt-5 font-semibold text-[#B45454]">
                                                 {errors.user.email}
                                             </span>   
                                         )}
@@ -193,7 +193,7 @@ type="password" name="user.password" placeholder="password" />
                                         touched.user &&
                                         
                                         touched.user.password && ( 
-                                            <span className="mb-3 font-semibold text-[#B45454]">
+                                            <span className="mt-3 font-semibold text-[#B45454]">
                                                 {errors.user.password}
                                             </span>   
                                         )}

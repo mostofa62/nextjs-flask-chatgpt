@@ -10,15 +10,7 @@ import { useRouter } from "next/navigation";
 
   const url = process.env.url;
 
-  interface ContainerProps {
-    children: React.ReactNode
-  }
   
-  const Container = ({ children }: ContainerProps) => (
-    <div className="flex flex-col items-center justify-between bg-zinc-800 w-full py-10 px-4 rounded-xl h-fit">
-      {children}
-    </div>
-  )
 const PdfProcessList=()=> {
   const router = useRouter()
   const user={
@@ -51,7 +43,9 @@ const PdfProcessList=()=> {
  
   return (
     <DefaultLayout>
-        <Container>
+        <div className="flex md:mt-5">
+    <div className="md:w-2/12"></div>
+    <div className="md:w-8/12 sm:w-full">
         <Formik
         initialValues={{ user }}
         /*validationSchema={userSchema}*/
@@ -147,7 +141,8 @@ disabled={isSubmitting} type="submit"
       </Form>
         )}
       />
-        </Container>    
+        </div>
+        </div>    
     </DefaultLayout>
   )
 }
