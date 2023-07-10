@@ -123,7 +123,7 @@ const PdfProcessList=({
 <div className="w-full my-5">
 <button 
 disabled={!isValid || isSubmitting} type="submit"
- className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
+ className="flex w-full justify-center rounded bg-[#f1e56c] p-3 font-medium text-black">
   Save
 </button>
                     </div>

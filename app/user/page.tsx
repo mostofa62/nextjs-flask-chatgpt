@@ -205,7 +205,7 @@ const PdfUpload=()=> {
             {/* <!-- ====== Chat List Start --> */}
             <div className='sticky border-b border-stroke px-6 py-7.5 dark:border-strokedark'>
               <h3 className='text-lg font-medium text-black dark:text-white 2xl:text-xl'>
-                Active Conversations
+                Chat History
                 <span className='rounded-md border-[.5px] border-stroke bg-gray-2 py-0.5 px-2 text-base font-medium text-black dark:border-strokedark dark:bg-boxdark-2 dark:text-white 2xl:ml-4'>
                   {countActConv}
                 </span>
@@ -300,7 +300,7 @@ const PdfUpload=()=> {
               {conversations.map((converse)=>{
                 return(
                 <div key={converse.index}>
-              {converse.user =='bot'?  
+              {converse.user != 'bot'?  
               <div className='ml-auto max-w-125' >
                 <p className='mb-2.5 text-sm font-medium'>{converse.username}</p>
                 <div className='mb-2.5 rounded-2xl rounded-tl-none bg-gray py-3 px-5 dark:bg-boxdark-2'>
@@ -313,8 +313,8 @@ const PdfUpload=()=> {
               :
               <div className='max-w-125'>
                 <p className='mb-2.5 text-sm font-medium'>{converse.username}</p>
-                <div className='mb-2.5 rounded-2xl rounded-br-none bg-primary py-3 px-5'>
-                  <p className='text-white'>
+                <div className='mb-2.5 rounded-2xl rounded-br-none bg-[#f1e56c] py-3 px-5'>
+                  <p className='text-[#1A222C]'>
                   {converse.message}
                   </p>
                 </div>
@@ -385,7 +385,7 @@ const PdfUpload=()=> {
                   </div>
                   */}
                 </div>
-                <button className='flex h-13 w-full max-w-13 items-center justify-center rounded-md bg-primary text-white hover:bg-opacity-90'>
+                <button className='flex h-13 w-full max-w-13 items-center justify-center rounded-md bg-[#f1e56c] text-[#1A222C] hover:bg-opacity-90'>
                   <svg
                     width='24'
                     height='24'
@@ -395,14 +395,14 @@ const PdfUpload=()=> {
                   >
                     <path
                       d='M22 2L11 13'
-                      stroke='white'
+                      stroke='#1A222C'
                       strokeWidth='2'
                       strokeLinecap='round'
                       strokeLinejoin='round'
                     />
                     <path
                       d='M22 2L15 22L11 13L2 9L22 2Z'
-                      stroke='white'
+                      stroke='#1A222C'
                       strokeWidth='2'
                       strokeLinecap='round'
                       strokeLinejoin='round'
