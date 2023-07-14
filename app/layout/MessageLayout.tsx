@@ -1,20 +1,19 @@
-"use client"; // This is a client component 👈🏽
-
-
-import { ReactNode, useState, useEffect } from 'react';
-import Header from '../components/Header';
-import Sidebar from '../components/Sidebar';
+import { ReactNode, useEffect, useState } from 'react';
+import HeaderMessage from '@/app/components/HeaderMessage';
+import SidebarLeft from '@/app/components/SidebarLeft';
+import SidebarRight from '@/app/components/SidebarRight';
 //import useAuthRoute from '@/app/hooks/useAuthRoute';
 import { useRouter, usePathname } from "next/navigation";
-import UseAuthRoute from '@/app/hooks/useAuthRoute';
 import useAuth from '@/app/hooks/useAuth';
-
+import UseAuthRoute from '@/app/hooks/useAuthRoute';
 interface DefaultLayoutProps {
   children: ReactNode;
 }
 
 const MessageLayout = ({ children }: DefaultLayoutProps) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [rightsidebarOpen, setRightSidebarOpen] = useState(false);
+
   const router = useRouter();
   const pathname = usePathname();
   const authCtx = useAuth();
@@ -40,14 +39,14 @@ const MessageLayout = ({ children }: DefaultLayoutProps) => {
     <div className="dark:bg-boxdark-2 dark:text-bodydark">
       {/* <!-- ===== Page Wrapper Start ===== --> */}
       <div className="flex h-screen overflow-hidden bg-black">
-        {/* <!-- ===== Sidebar Start ===== --> */}
-        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        {/* <!-- ===== Sidebar End ===== --> */}
+        {/* <!-- ===== Left Sidebar Start ===== --> */}
+        <SidebarLeft sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        {/* <!-- ===== Left Sidebar End ===== --> */}
 
         {/* <!-- ===== Content Area Start ===== --> */}
         <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
           {/* <!-- ===== Header Start ===== --> */}
-          <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          <HeaderMessage sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           {/* <!-- ===== Header End ===== --> */}
 
           {/* <!-- ===== Main Content Start ===== --> */}
@@ -61,6 +60,10 @@ const MessageLayout = ({ children }: DefaultLayoutProps) => {
           {/* <!-- ===== Main Content End ===== --> */}
         </div>
         {/* <!-- ===== Content Area End ===== --> */}
+
+        {/* <!-- ===== Right Sidebar Start ===== --> */}
+        <SidebarRight sidebarOpen={rightsidebarOpen} setSidebarOpen={setRightSidebarOpen} />
+        {/* <!-- ===== Right Sidebar End ===== --> */}
       </div>
       {/* <!-- ===== Page Wrapper End ===== --> */}
     </div>
