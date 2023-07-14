@@ -5,7 +5,7 @@ const Prompt = ({text}:any) => {
 
       <div className="mt-1 items-end justify-between">
         <div>
-          <p className="text-title-sm font-bold text-black dark:text-[#f1e56c]">
+          <p className="text-sm text-black dark:text-[#f1e56c]">
             {text}
           </p>
           <span className="text-sm font-medium">Try prompt </span>

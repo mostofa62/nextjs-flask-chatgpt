@@ -132,14 +132,14 @@ const PdfUpload=()=> {
 
      {/* <Chat url={url+"message/"+authCtx.activeMessageId} prevMessage={prevMessages}/>*/}
 
-    <div className='h-[calc(100vh-186px)] overflow-hidden sm:h-[calc(100vh-174px)]'>
+    <div className='h-[calc(100vh-186px)] overflow-hidden sm:h-[calc(100vh-146px)]'>
         <div className='h-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark xl:flex'>
           
           <div className='flex h-full flex-col border-l border-stroke dark:border-strokedark xl:w-full'>
             {/* <!-- ====== Chat Box Start --> */}
             <div className='sticky flex items-center justify-between border-b border-stroke px-6 py-4.5 dark:border-strokedark'>
               <div className='flex items-center'>
-                <div className='mr-4.5 h-13 w-full max-w-13 overflow-hidden rounded-full'>
+                <div className='mr-4.5 h-8 w-full max-w-13 overflow-hidden rounded-full'>
                   {/*
                   <Image
                     src={UserOne}

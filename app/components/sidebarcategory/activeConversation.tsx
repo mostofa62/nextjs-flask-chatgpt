@@ -63,7 +63,7 @@ const ActiveConversation=(props:any)=> {
 
 
 return(
-    <div className='hidden h-96 flex-col xl:flex'>
+    <div className='hidden lg:h-80 md:h-96 flex-col xl:flex'>
             {/* <!-- ====== Chat List Start --> */}
             {/*
             <div className='sticky border-b border-stroke px-6 py-7.5 dark:border-strokedark'>
